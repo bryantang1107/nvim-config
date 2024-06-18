@@ -3,7 +3,7 @@ return {
     "williamboman/mason.nvim",
     config = function()
       require("mason").setup()
-    end
+    end,
   },
   {
     "williamboman/mason-lspconfig.nvim",
@@ -15,42 +15,54 @@ return {
           "gopls",
           "html",
           "jsonls",
-          "tsserver"
-        }
+          "tsserver",
+        },
       })
-    end
+    end,
   },
   {
     "neovim/nvim-lspconfig",
     config = function()
       --to allow other lsp to pass snippets to cmp_nvim_lsp
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local lspconfig = require("lspconfig")
+      local util = require("lspconfig/util")
       lspconfig.lua_ls.setup({
-        capabilities = capabilities
+        capabilities = capabilities,
       })
       lspconfig.golangci_lint_ls.setup({
-        capabilities = capabilities
+        capabilities = capabilities,
       })
       lspconfig.gopls.setup({
-        capabilities = capabilities
+        capabilities = capabilities,
+        cmd = { "gopls" },
+        filetypes = { "go", "gomod", "gowork", "gotmpl" },
+        root_dir = util.root_pattern("go,work", "go.mod", ".git"),
+        settings = {
+          gopls = {
+            completeUnimported = true,
+            usePlaceholders = true,
+            analyses = {
+              unusedparams = true,
+            },
+          },
+        },
       })
       lspconfig.html.setup({
-        capabilities = capabilities
+        capabilities = capabilities,
       })
       lspconfig.jsonls.setup({
-        capabilities = capabilities
+        capabilities = capabilities,
       })
       lspconfig.tsserver.setup({
-        capabilities = capabilities
+        capabilities = capabilities,
       })
       --view information
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       --go-to-definition
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
+      vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
       --quick fixes suggestions
-      vim.keymap.set({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, {})
-    end
-  }
+      vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+    end,
+  },
 }
