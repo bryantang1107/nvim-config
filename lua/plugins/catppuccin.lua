@@ -1,9 +1,8 @@
-return  { 
-  "catppuccin/nvim", 
-  name = "catppuccin", 
-  priority = 1000, 
-  lazy = false, 
-  --config func will run when lazy loads
+return {
+  "catppuccin/nvim",
+  name = "catppuccin",
+  priority = 1000,
+  lazy = false,
   config = function()
     vim.cmd.colorscheme "catppuccin"
   end

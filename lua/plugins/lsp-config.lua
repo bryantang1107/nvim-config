@@ -8,7 +8,8 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     config = function()
-      require("mason-lspconfig").setup({
+      local config = require("mason-lspconfig")
+      local opts = {
         ensure_installed = {
           "lua_ls",
           "golangci_lint_ls",
@@ -16,14 +17,15 @@ return {
           "html",
           "jsonls",
           "tsserver",
+          "tailwindcss"
         },
-      })
+      }
+      config.setup(opts)
     end,
   },
   {
     "neovim/nvim-lspconfig",
     config = function()
-      --to allow other lsp to pass snippets to cmp_nvim_lsp
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local lspconfig = require("lspconfig")
       local util = require("lspconfig/util")
@@ -55,7 +57,10 @@ return {
         capabilities = capabilities,
       })
       lspconfig.tsserver.setup({
-        capabilities = capabilities,
+        capabilities = capabilities
+      })
+      lspconfig.tailwindcss.setup({
+        capabilities = capabilities
       })
       --view information
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
@@ -65,4 +70,12 @@ return {
       vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
     end,
   },
+  {
+    "NvChad/nvim-colorizer.lua",
+    opts = {
+      user_default_options = {
+        tailwind = true
+      }
+    }
+  }
 }
