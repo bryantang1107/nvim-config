@@ -20,5 +20,9 @@ require("lazy").setup("plugins")
 vim.api.nvim_set_keymap('v', '<leader>y', '"+y', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-a>', 'ggVG', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>d', ':lua vim.diagnostic.open_float() <CR>', { noremap = true })
-vim.keymap.set("n", "<C-h>", ":bprev<CR>", {})
 vim.keymap.set("n", "<C-l>", ":bnext<CR>", {})
+vim.keymap.set("n", "<C-h>", ":bprev<CR>", {})
+vim.keymap.set("n", "<leader>w", ":w<CR>", {})
+
+
+-- https://github.com/mg979/vim-visual-multi
